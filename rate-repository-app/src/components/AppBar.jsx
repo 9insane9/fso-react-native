@@ -1,13 +1,17 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Link } from "react-router-native";
 import Text from "./Text";
-// import Constants from "expo-constants";
+import Constants from "expo-constants";
+import useAuthStorage from "../hooks/useAuthStorage";
+import { useApolloClient } from "@apollo/client/react";
 import theme from "../theme";
+import { ME } from "../graphql/queries";
+import { useQuery } from "@apollo/client/react";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    // paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.appBarBackground,
     // height: "100%",
     justifyContent: "flex-start",
@@ -24,7 +28,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tab = ({ text, link }) => {
+const Tab = ({ text, link, onPress }) => {
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        style={styles.tab}
+      >
+        <Text
+          style={styles.text}
+          fontWeight="bold"
+          fontSize="heading"
+        >
+          {text}
+        </Text>
+      </Pressable>
+    );
+  }
+
   return (
     <Link
       to={link}
@@ -42,6 +63,17 @@ const Tab = ({ text, link }) => {
 };
 
 const AppBar = () => {
+  const { data } = useQuery(ME);
+  const apolloClient = useApolloClient();
+  const authStorage = useAuthStorage();
+
+  const isLoggedIn = !!data?.me;
+
+  const handleSignOut = async () => {
+    await authStorage.removeAccessToken();
+    await apolloClient.resetStore();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -49,10 +81,18 @@ const AppBar = () => {
           text="Repositories"
           link="/"
         />
-        <Tab
-          text="Sign in"
-          link="/signin"
-        />
+
+        {isLoggedIn ? (
+          <Tab
+            text="Sign out"
+            onPress={handleSignOut}
+          />
+        ) : (
+          <Tab
+            text="Sign in"
+            link="/signin"
+          />
+        )}
       </ScrollView>
     </View>
   );
