@@ -1,6 +1,6 @@
-import { View, Text as NativeText, StyleSheet, Image } from "react-native";
-import Text from "./Text";
-import theme from "../theme";
+import { View, StyleSheet, Image } from "react-native";
+import Text from "../Text";
+import theme from "../../theme";
 
 const styles = StyleSheet.create({
   item: {
@@ -14,9 +14,6 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    // borderStyle: "solid",
-    // borderWidth: 1,
-    // borderColor: "red",
     borderRadius: 5,
     marginRight: 20,
   },
@@ -41,9 +38,6 @@ const styles = StyleSheet.create({
   stat: {
     padding: 10,
     alignItems: "center",
-    // borderStyle: "solid",
-    // borderWidth: 1,
-    // borderColor: "red",
   },
 });
 
@@ -133,7 +127,10 @@ const RepositoryItem = ({
   ownerAvatarUrl,
 }) => {
   return (
-    <View style={styles.item}>
+    <View
+      style={styles.item}
+      testID="repositoryItem"
+    >
       <View style={styles.topContainer}>
         <Image
           source={{ uri: ownerAvatarUrl }}
