@@ -1,6 +1,5 @@
 import { render, within, screen } from "@testing-library/react-native";
 import { RepositoryListContainer } from ".";
-// import { Text } from "react-native";
 
 describe("RepositoryList", () => {
   describe("RepositoryListContainer", () => {
@@ -47,19 +46,48 @@ describe("RepositoryList", () => {
           },
         ],
       };
-
-      // Add your test code here
-
       await render(<RepositoryListContainer repositories={repositories} />);
+      // screen.debug();
 
-      screen.debug();
+      const repositoryItems = screen.getAllByTestId("repositoryItem");
 
-      const repositoryItems = await screen.getAllByTestId("repositoryItem");
-      const [firstRepositoryItem] = repositoryItems;
+      const expected = [
+        {
+          fullName: "jaredpalmer/formik",
+          language: "TypeScript",
+          stars: "21.9k",
+          forks: "1.6k",
+          reviews: "3",
+          rating: "88",
+        },
+        {
+          fullName: "async-library/react-async",
+          language: "JavaScript",
+          stars: "1.8k",
+          forks: "69",
+          reviews: "3",
+          rating: "72",
+        },
+      ];
 
-      expect(
-        within(firstRepositoryItem).getByText("jaredpalmer/formik"),
-      ).toBeDefined();
+      repositoryItems.forEach((item, index) => {
+        const repo = expected[index];
+
+        expect(within(item).getByText(repo.fullName)).toBeTruthy();
+        expect(within(item).getByText(repo.language)).toBeTruthy();
+
+        expect(within(item).getByText("Stars")).toBeTruthy();
+        expect(within(item).getByText(repo.stars)).toBeTruthy();
+
+        expect(within(item).getByText("Forks")).toBeTruthy();
+        expect(within(item).getByText(repo.forks)).toBeTruthy();
+
+        expect(within(item).getByText("Reviews")).toBeTruthy();
+        expect(within(item).getByText(repo.reviews)).toBeTruthy();
+
+        expect(within(item).getByText("Rating")).toBeTruthy();
+        expect(within(item).getByText(repo.rating)).toBeTruthy();
+      });
     });
   });
 });

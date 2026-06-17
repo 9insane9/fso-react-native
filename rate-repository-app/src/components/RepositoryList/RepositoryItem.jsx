@@ -4,7 +4,7 @@ import theme from "../../theme";
 
 const styles = StyleSheet.create({
   item: {
-    padding: 20,
+    padding: 10,
     backgroundColor: theme.colors.repositoryItemBackground,
   },
   topContainer: {
@@ -34,10 +34,15 @@ const styles = StyleSheet.create({
     gap: 20,
     padding: 10,
     paddingBottom: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   stat: {
-    padding: 10,
+    padding: 5,
     alignItems: "center",
+    // borderStyle: "solid",
+    // borderWidth: 1,
+    // borderColor: "red",
   },
 });
 
@@ -108,7 +113,7 @@ const Stats = ({ stargazersCount, forksCount, reviewCount, ratingAverage }) => {
           color="textSecondary"
           fontSize="subheading"
         >
-          Ratings
+          Rating
         </Text>
       </View>
     </View>

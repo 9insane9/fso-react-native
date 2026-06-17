@@ -103,6 +103,7 @@ const SignInForm = ({ onSubmit }) => {
       <Pressable
         onPress={formik.handleSubmit}
         style={[styles.formElement, styles.button]}
+        accessibilityRole="button"
       >
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
