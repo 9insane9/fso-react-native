@@ -24,7 +24,7 @@ const theme = {
     }),
   },
   fontWeights: {
-    normal: "400",
+    normal: "300",
     bold: "700",
   },
 };

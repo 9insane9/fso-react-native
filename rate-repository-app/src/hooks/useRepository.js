@@ -9,6 +9,8 @@ const useRepository = (id) => {
     },
   });
 
+  console.log(data?.repository);
+
   return {
     repository: data?.repository,
     error,
