@@ -1,11 +1,15 @@
 import theme from "../../theme";
-import Text from "../Text";
+import Text from "../common/Text";
 import { Link } from "react-router-native";
 import { StyleSheet, Pressable } from "react-native";
 
 const styles = StyleSheet.create({
   tab: {
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexShrink: 1,
   },
   text: {
     color: theme.colors.appBarText,

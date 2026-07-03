@@ -1,11 +1,11 @@
 import RepositoryItem from "../RepositoryList/RepositoryItem";
 import useRepository from "../../hooks/useRepository";
-import Text from "../Text";
+import Text from "../common/Text";
 import { View, StyleSheet, Pressable, FlatList } from "react-native";
 import theme from "../../theme";
 import { useParams } from "react-router-native";
 import * as Linking from "expo-linking";
-import { parseISO, format } from "date-fns";
+import ReviewItem from "./ReviewItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,81 +31,7 @@ const styles = StyleSheet.create({
   // separator: {
   //   height: 10,
   // },
-  reviewContainer: {
-    marginTop: 10,
-    backgroundColor: theme.colors.repositoryItemBackground,
-    flexShrink: 1,
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  ratingContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 50 / 2,
-    borderStyle: "solid",
-    borderWidth: 3,
-    borderColor: theme.colors.primary,
-    marginRight: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  ratingNumber: {},
-  reviewHeaderContainer: {
-    flexShrink: 1,
-    height: 50,
-  },
-  reviewText: {
-    flexShrink: 1,
-  },
-  reviewRightPanel: {
-    flexShrink: 1,
-  },
 });
-
-const ReviewItem = ({ review }) => {
-  const formattedDate = format(parseISO(review.createdAt), "d MMM yyyy");
-
-  return (
-    <View style={styles.reviewContainer}>
-      <View style={styles.ratingContainer}>
-        <Text
-          fontSize="heading"
-          fontWeight="bold"
-          color="primary"
-          style={[styles.ratingNumber]}
-        >
-          {review.rating}
-        </Text>
-      </View>
-      <View style={styles.reviewRightPanel}>
-        <View style={styles.reviewHeaderContainer}>
-          <Text
-            fontSize="heading"
-            fontWeight="bold"
-            color="secondary"
-          >
-            {review.user.username}
-          </Text>
-          <Text
-            fontSize="subheading"
-            color="secondary"
-          >
-            {formattedDate}
-          </Text>
-        </View>
-
-        <Text
-          fontSize="subheading"
-          color="secondary"
-          style={styles.reviewText}
-        >
-          {review.text}
-        </Text>
-      </View>
-    </View>
-  );
-};
 
 const ItemSeparator = () => <View style={styles.separator} />;
 

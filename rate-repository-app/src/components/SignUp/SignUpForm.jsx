@@ -13,14 +13,27 @@ const styles = StyleSheet.create({
 const initialValues = {
   username: "",
   password: "",
+  passwordConfirm: "",
 };
 
 const validationSchema = yup.object({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
+  username: yup
+    .string()
+    .required("Username is required")
+    .min(5, "Must be at least 5 characters")
+    .max(30, "Must be 30 characters or less"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(5, "Must be at least 5 characters")
+    .max(50, "Must be 50 characters or less"),
+  passwordConfirm: yup //better check if this works
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Password confirmation is required"),
 });
 
-const SignInForm = ({ onSubmit }) => {
+const SignUpForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -30,6 +43,7 @@ const SignInForm = ({ onSubmit }) => {
   const fields = {
     username: getFormikField(formik, "username"),
     password: getFormikField(formik, "password"),
+    passwordConfirm: getFormikField(formik, "passwordConfirm"),
   };
 
   return (
@@ -43,12 +57,17 @@ const SignInForm = ({ onSubmit }) => {
         placeholder="Password"
         variant="password"
       />
+      <TextInput
+        field={fields.passwordConfirm}
+        placeholder="Confirm password"
+        variant="password"
+      />
       <Button
         onPress={formik.handleSubmit}
-        buttonText="Sign in"
+        buttonText="Sign up and sign in"
       />
     </View>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
